@@ -1,0 +1,48 @@
+import java.text.NumberFormat;
+import java.util.Scanner;
+
+public class Mortgage {
+    static double loan;
+    static double annual_rate;
+    static int years;
+    static double monthly_payment;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        loan = method(scanner, "Enter the loan: ", 1000, 1000000);
+        annual_rate = method(scanner, "Enter the annual interest rate: ", 1, 30);
+        years = (int) method(scanner, "Enter the period (Years): ", 1, 25);
+        double monthlyRate = annual_rate / 100.0D / 12.0D;
+        int numberOfMonthlyPayments = years * 12;
+        monthly_payment = loan * (monthlyRate * Math.pow(1.0D + monthlyRate, (double) numberOfMonthlyPayments) / (Math.pow(1.0D + monthlyRate, (double) numberOfMonthlyPayments) - 1.0D));
+        System.out.println("Monthly payment: " + monthly_payment);
+        int numberOfPayments = years * 12;
+        int numberOfPaymentsMade = 0;
+
+        for (int k = 1; k <= numberOfPayments; ++k) {
+            double remainingBalance = loan * ((Math.pow(1.0D + monthlyRate, (double) numberOfPayments) - Math.pow(1.0D + monthlyRate, (double) numberOfPaymentsMade)) / (Math.pow(1.0D + monthlyRate, (double) numberOfPayments) - 1.0D));
+            ++numberOfPaymentsMade;
+            System.out.println("Remaining: " + Math.round(remainingBalance));
+        }
+
+        System.out.println("Number of payments: " + numberOfPaymentsMade);
+    }
+
+    public static double method(Scanner scanner, String message, int min, int max) {
+        System.out.println(message);
+
+        while (true) {
+            while (!scanner.hasNextDouble()) {
+                System.out.println("Enter a Number: ");
+                scanner.next();
+            }
+
+            double input = scanner.nextDouble();
+            if (input >= (double) min && input <= (double) max) {
+                return input;
+            }
+
+            System.out.println("Enter a number between " + min + " and " + max);
+        }
+    }
+}
