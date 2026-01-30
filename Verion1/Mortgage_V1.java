@@ -1,7 +1,8 @@
-import java.text.NumberFormat;
+package Verion1;
+
 import java.util.Scanner;
 
-public class Mortgage {
+public class Mortgage_V1 {
     static double loan;
     static double annual_rate;
     static int years;
